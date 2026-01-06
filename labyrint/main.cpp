@@ -17,4 +17,5 @@ int main() {
   GenerateMaze(maze, size_of_maze);
   ShowMaze(maze, size_of_maze);
   WaveAlgorithm(maze, size_of_maze);
+  ShowMaze(maze, size_of_maze);
 }
