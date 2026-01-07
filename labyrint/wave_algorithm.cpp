@@ -2,6 +2,10 @@
 #include <vector>
 #include <iomanip>
 #include "input_output_HEAD.h"
+#include <math.h>
+#include <thread>
+#include <fstream>
+const int full_screen = 237;
 void WaveAlgorithm(std::vector<std::vector<char>> maze,
                     int size_of_maze,
                    int user) {
@@ -71,8 +75,24 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
     }
 
     curret_step++;
+    if (curret_step > size_of_maze * sqrt(size_of_maze)) {
+      SetColor(4);
+      std::cout << "Из лабиринта нет выхода!\n\n";
+      ResetColor();
+      flag = 0;
+    }
     switch (user) {
       case 1: {
+
+        SetColor(10);
+        std::cout << std::string(full_screen, '=');
+        SetColor(9);
+        std::cout << "\n\n  ";
+        std::cout << "Волна номер: " << curret_step << "\n\n";
+        SetColor(10);
+        std::cout << std::string(full_screen, '=');
+        std::cout << "\n\n\n\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(1400));
         for (int i = 0; i < size_of_maze; i++) {
           for (int j = 0; j < size_of_maze; j++) {
             if (wave[i][j] == 9999) {
@@ -109,8 +129,8 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         std::cout << "\n\n\n";
         break;
       }
-      case 2: {
-        
+      case 3: {
+        OutputWave(wave, size_of_maze, curret_step);
         break;
       }
       default: {
@@ -167,16 +187,26 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
       continue;
     }
   }
-  for (int i = 0; i < restore_path.size(); i++) {
-    int x = restore_path[i][1];
-    int y = restore_path[i][0];
-    maze[y][x] = '*';
-    maze[0][0] = '#';
-  }
   if (user == 2) {
+    for (int i = 0; i < restore_path.size(); i++) {
+      int x = restore_path[i][1];
+      int y = restore_path[i][0];
+      maze[y][x] = '*';
+      maze[0][0] = '#';
+    }
     ShowMaze(maze, size_of_maze);
+ 
+  }
+  if (user == 4) {
+    for (int i = 0; i < restore_path.size(); i++) {
+      int x = restore_path[i][1];
+      int y = restore_path[i][0];
+      maze[y][x] = ' ';
+      maze[0][0] = '#';
+    }
+    OutputShortestWay(maze, size_of_maze);
   }
 
 
- 
+
 }

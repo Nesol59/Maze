@@ -66,11 +66,8 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
   }
   int which_side = (rand() % 2); //0 слева, 1 снизу
   if (!which_side) {
-    maze[size_of_maze - 1][enter] = ' ';
     maze[size_of_maze - 2][enter] = '/';
   } else {
-
-    maze[enter][0] = ' ';
     maze[enter][1] = '/';
 
   }
@@ -82,10 +79,8 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
   }
   which_side = (rand() % 3) + 2;  // 3 спрва , 4 сверху
   if (which_side==3) {
-    maze[exit][size_of_maze - 1] = ' ';
     maze[exit][size_of_maze-2] = '/';
   } else {
-    maze[0][exit] = ' ';
     maze[1][exit] = '/';
   }
   return;
