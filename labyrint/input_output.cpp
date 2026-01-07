@@ -124,7 +124,7 @@ bool CheckIsNumber(int & number, int min_eval,int max_eval) {
   std::getline(std::cin, s);
   std::cout << "\n";
   for (size_t i = 0; i < s.length(); i++)
-    if (!isdigit(s[i])) {
+    if (!iswdigit(s[i])) {
       return 0;
     }
   if (!s.empty()) {

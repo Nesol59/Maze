@@ -1,9 +1,13 @@
 ﻿#include <iostream>
 #include <vector>
 #include <time.h>
-void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
+#include "input_output_HEAD.h"
+#include <thread>
+void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
+                  int see_generate) {
   std::srand(std::time(NULL));
   // генерация внешних стенок
+
   for (int i = 0; i < size_of_maze; i++) {
     for (int j = 0; j < size_of_maze; j++) {
       if (i == 0 || j == 0 || j == size_of_maze-1 || i == size_of_maze-1) {
@@ -14,17 +18,26 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
 
     }
   }
+  std::vector<std::vector<char>> copy_maze = maze;
+  if (see_generate == 1) {
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(550));
+    ShowMaze(maze, size_of_maze);
+  }
   // генерация стенок в самом лабиринте
   for (int i = 1; i < size_of_maze-1; i++) {
     for (int j = 1; j < size_of_maze-1; j++) {
       if (i % 2 == 0 && j % 2 == 0) {
         int random_direction = rand() % 4 + 1;
-        int shall_we_stop;
+        int shall_we_stop = 1;
         if (random_direction == 1) { //вверх
           for (int up = i; up > 0 && maze[up][j] != '#'; up--) {
-              shall_we_stop = rand() % 7;
-              if (shall_we_stop)
-                maze[up][j] = '#';
+            if (up % 2 == 0 && up!=i) {
+              shall_we_stop = rand() % 4;
+              
+            }
+            if (shall_we_stop)
+              maze[up][j] = '#';
               else
                 break;
             
@@ -32,26 +45,45 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
         }
         if (random_direction == 2) {  // вправо
           for (int right = j; right < size_of_maze - 1 && maze[i][right] != '#'; right++) {
-            shall_we_stop = rand() % 6;
-            if (shall_we_stop) maze[i][right] = '#';
+            if (right % 2==0 && right!=j) {
+              shall_we_stop = rand() %4;
+              
+            }
+            if (shall_we_stop)
+              maze[i][right] = '#';
             else
               break;
           }
         }
         if (random_direction == 3) {  // вниз
           for (int down = i; down < size_of_maze - 1 && maze[down][j] != '#'; down++) {
-            shall_we_stop = rand() % 6;
-            if (shall_we_stop) maze[down][j] = '#';
+            if (down % 2 == 0 && down!=i) {
+              shall_we_stop = rand() % 4;
+              
+            }
+            if (shall_we_stop)
+              maze[down][j] = '#';
             else
               break;
           }
         }
         if (random_direction == 4) {  // влево
           for (int left = j; left != 0 && maze[i][left] != '#'; left--) {
-            shall_we_stop = rand() %6;
-            if (shall_we_stop) maze[i][left] = '#';
+            if (left % 2==0 && left!=j) {
+              shall_we_stop = rand() %4;
+              
+            }
+            if (shall_we_stop)
+              maze[i][left] = '#';
             else
               break;
+          }
+        }
+        if (see_generate == 1) {
+          if (copy_maze != maze) {
+            copy_maze = maze;
+            std::this_thread::sleep_for(std::chrono::milliseconds(550));
+            ShowMaze(maze, size_of_maze);
           }
         }
       }
@@ -64,6 +96,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
     enter = rand() % (size_of_maze-1);
 
   }
+
   int which_side_enter = (rand() % 2); //0 слева, 1 снизу
   if (!which_side_enter) {
     maze[size_of_maze - 2][enter] = '/';
@@ -85,6 +118,13 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
     maze[exit][size_of_maze-2] = '/';
   } else {
     maze[1][exit] = '/';
+  }
+  if (see_generate == 1) {
+    if (copy_maze != maze) {
+      copy_maze = maze;
+      std::this_thread::sleep_for(std::chrono::milliseconds(550));
+      ShowMaze(maze, size_of_maze);
+    }
   }
   return;
 }

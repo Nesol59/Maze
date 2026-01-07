@@ -8,6 +8,7 @@
 #include "text_for_user_HEAD.h"
 #include <iomanip>
 #include <fstream>
+#include <thread>
 
 int main() {
 
@@ -35,6 +36,9 @@ int main() {
     }
     switch (user) {
       case 1: {
+        
+        size_of_maze = 0;
+        maze.resize(0, std::vector<char>(0));
         SetColor(10);
         std::cout << std::string(full_screen, '=') << "\n\n\n" <<
             std::string(100, ' ');
@@ -57,9 +61,54 @@ int main() {
           break;
           std::cout << "\n\n";
         }
-        maze.resize(size_of_maze, std::vector<char>(size_of_maze));
-        GenerateMaze(maze, size_of_maze);
-        is_user_made_maze = 1;
+        int see_generate;
+        SetColor(10);
+        std::cout << std::string(full_screen, '=') << "\n\n\n"
+                  << std::string(100, ' ');
+        ResetColor();
+
+        std::cout << "Хотите увидеть пожаговаю генерацию лабиринта?" << "\n\n\n";
+        SetColor(10);
+        std::cout << std::string(full_screen, '=');
+        SetColor(9);
+
+        while (true) {
+          std::cout << "\n\n    1.Да\n\n    2.Нет\n\n";
+          SetColor(10);
+          std::cout << std::string(full_screen, '=') << "\n\n\n";
+          ResetColor();
+          std::cout << "    Выберите опцию от 1 до 2: ";
+          
+        
+          if (!CheckIsNumber(see_generate, 1, 2)) {
+            SetColor(4);
+            std::cout << "    Некорретный ввод!\n\n";
+            SetColor(10);
+            std::cout << std::string(full_screen, '=') << "\n";
+            ResetColor();
+            continue;
+          }
+          break;
+          std::cout << "\n\n";
+        }
+        switch (see_generate) {
+          case 1: {
+            maze.resize(size_of_maze, std::vector<char>(size_of_maze));
+            GenerateMaze(maze, size_of_maze,see_generate);
+            is_user_made_maze = 1;
+            break;
+  
+          
+          }
+          case 2: {
+            maze.resize(size_of_maze, std::vector<char>(size_of_maze));
+            GenerateMaze(maze, size_of_maze, see_generate);
+            is_user_made_maze = 1;
+            break;
+          }
+
+
+        }
         break;
       }
       case 2: {
@@ -79,9 +128,16 @@ int main() {
         break;
       }
       case 3: {
-        std::cout << "    К сожалению, я могу только посоветовать отрегулировать "
-                     "значение <const int full_screen = 237> в файле "
-                     "<input_output_HEAD.h>\n\n";
+        std::cout
+            << "    К сожалению, я могу только посоветовать отрегулировать "
+               "значение";
+        SetColor(10);
+        std::cout << " <const int full_screen = 237 > ";
+        ResetColor();
+        std::cout << "в файле ";
+        SetColor(10);
+        std::cout<< "<input_output_HEAD.h>\n\n";
+        ResetColor();
         break;
       }
       case 4: {
@@ -183,25 +239,39 @@ int main() {
 
         std::cout << "  Очистить файл?" << "\n\n\n";
         SetColor(10);
+        std::cout << std::string(full_screen, '=') << "\n\n\n"
+                  << std::string(100, ' ');
+        ResetColor();
+
+        std::cout << "Хотите увидеть пожаговаю генерацию лабиринта?"
+                  << "\n\n\n";
+        SetColor(10);
         std::cout << std::string(full_screen, '=');
         SetColor(9);
-        
-        
+
         while (true) {
-          
           std::cout << "\n\n    1.Да\n\n    2.Нет\n\n";
+          SetColor(10);
+          std::cout << std::string(full_screen, '=') << "\n\n\n";
           ResetColor();
           std::cout << "    Выберите опцию от 1 до 2: ";
 
           if (!CheckIsNumber(clean, 1, 2)) {
             SetColor(4);
             std::cout << "    Некорретный ввод!\n\n";
+            SetColor(10);
+            std::cout << std::string(full_screen, '=') << "\n";
             ResetColor();
             continue;
           }
           break;
           std::cout << "\n\n";
         }
+        SetColor(10);
+        std::cout << std::string(full_screen, '=') << "\n\n\n"
+                  << std::string(100, ' ');
+        ResetColor();
+        std::cout<< "\n\n";
         if (clean == 1) {
           std::fstream("output_wave.txt", std::fstream::out);
         }
