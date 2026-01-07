@@ -155,30 +155,8 @@ void OutputWave(std::vector<std::vector<int>> wave, int size_of_maze,
   output_file << "\n\n\n\n";
   for (int i = 0; i < size_of_maze; i++) {
     for (int j = 0; j < size_of_maze; j++) {
-      if (wave[i][j] == 9999) {
-
         output_file << std::right << std::setw(6) << (wave[i][j]);
         output_file << " ";
-
-      } else if (wave[i][j] == -1) {
-        output_file << std::right << std::setw(6) << (wave[i][j]);
-        output_file << " ";
-      } else if (wave[i][j] == 2025) {
-
-        output_file << std::right << std::setw(6) << (wave[i][j]);
-        output_file << " ";
-
-      } else if (wave[i][j] == 0) {
-
-        output_file << std::right << std::setw(6) << (wave[i][j]);
-        output_file << " ";
-
-      } else {
-
-        output_file << std::right << std::setw(6) << (wave[i][j]);
-        output_file << " ";
-
-      }
     }
     output_file << "\n\n";
   }

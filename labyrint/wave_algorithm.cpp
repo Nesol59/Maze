@@ -41,7 +41,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         wave[i][j] = 0;
     }
   }
-  wave[end_y][end_x] = 2025;
+  wave[end_y][end_x] = 2026;
 
   int curret_step = 0;
   bool flag = 1;
@@ -49,8 +49,8 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
     for (int i = 1; i < size_of_maze - 1; i++) {
       for (int j = 1; j < size_of_maze - 1; j++) {
         if (wave[i][j] == curret_step) {
-          if (wave[i][j + 1] == 2025 || wave[i][j - 1] == 2025 ||
-              wave[i - 1][j] == 2025 || wave[i + 1][j] == 2025) {
+          if (wave[i][j + 1] == 2026 || wave[i][j - 1] == 2026 ||
+              wave[i - 1][j] == 2026 || wave[i + 1][j] == 2026) {
             flag = 0;
           }
           if (wave[i][j + 1] != 9999 && wave[i][j + 1] != 0 &&
@@ -95,16 +95,18 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         for (int i = 0; i < size_of_maze; i++) {
           for (int j = 0; j < size_of_maze; j++) {
             if (wave[i][j] == 9999) {
-              SetColor(4);
+              SetColor(7);
               std::cout << std::right << std::setw(6) << (wave[i][j]);
               std::cout << " ";
               ResetColor();
             }
-            else if (wave[i][j] == -1) {
+            else if (wave[i][j] == -1) {SetColor(11);
+              SetColor(10);
               std::cout << std::right << std::setw(6) << (wave[i][j]);
               std::cout << " ";
+              ResetColor();
             } 
-            else if (wave[i][j] == 2025) {
+            else if (wave[i][j] == 2026) {
               SetColor(11);
               std::cout << std::right << std::setw(6) << (wave[i][j]);
               std::cout << " ";
@@ -117,7 +119,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
               ResetColor();
             } 
             else {
-                SetColor(2);
+                SetColor(1);
                 std::cout << std::right << std::setw(6) << (wave[i][j]);
                 std::cout << " ";
                 ResetColor();

@@ -25,7 +25,7 @@ int main() {
       FirstStep();
       std::cout << "\n\n";
       std::cout << "    Выберите опцию от 1 до 5: ";
-      if (!CheckIsNumber(user, 1, 5)) {
+      if (!CheckIsNumber(user, 1, 6)) {
         SetColor(4);
         std::cout << "    Некорретный ввод!\n\n";
         ResetColor();
@@ -151,6 +151,13 @@ int main() {
       
       }
       case 5: {
+        if (is_user_made_maze) {
+          OutputMaze(maze, size_of_maze);
+        } else
+        std::cout << "    Мы не можем продолжить без дегенерации "
+                     "лабиринта..................\n\n";
+      } break;
+      case 6: {
         if (is_user_made_maze)
           flag = 0;
         else
@@ -169,45 +176,8 @@ int main() {
   }
   flag = 1;
   while (flag) {
-    SecondStep();
-    std::cout << "\n\n";
-    while (true) {
-      std::cout << "    Выберите опцию от 1 до 3: ";
-      if (!CheckIsNumber(user, 1, 3)) {
-        SetColor(4);
-        std::cout << "    Некорретный ввод!\n\n";
-        ResetColor();
-        continue;
-      }
-      break;
-      std::cout << "\n\n";
-    }
-    switch (user) {
-      case 1: {
-        ShowMaze(maze, maze.size());
-        break;
-      }
-      case 2: {
-        OutputMaze(maze, size_of_maze);
-        break;
-      }
-      case 3: {
-        flag = 0;
-        break;
-      }
-      default: {
-        SetColor(4);
-        std::cout
-            << "    Такой опции не обнаружено, возврат к выбору задачи ///\n\n";
-        ResetColor();
-      }
-      
-    }
-  }
-  flag = 1;
-  while (flag) {
 
-    ThirdStep();
+    SecondStep();
     std::cout << "\n\n";
     while (true) {
       std::cout << "    Выберите опцию от 1 до 5: ";
@@ -233,7 +203,7 @@ int main() {
       case 3: {
         int clean;
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n"
+        std::cout << std::string(full_screen, '=') << "\n"
                   << std::string(100, ' ');
         ResetColor();
 
@@ -243,11 +213,7 @@ int main() {
                   << std::string(100, ' ');
         ResetColor();
 
-        std::cout << "Хотите увидеть пожаговаю генерацию лабиринта?"
-                  << "\n\n\n";
-        SetColor(10);
-        std::cout << std::string(full_screen, '=');
-        SetColor(9);
+       
 
         while (true) {
           std::cout << "\n\n    1.Да\n\n    2.Нет\n\n";
