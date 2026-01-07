@@ -11,4 +11,5 @@ void OutputWave(std::vector<std::vector<int>> wave, int size_of_maze,
 bool CheckIsNumber(int& number, int min_eval, int max_eval);
 void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze);
 void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze);
+const int full_screen = 237;
 #endif

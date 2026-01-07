@@ -5,7 +5,6 @@
 #include <math.h>
 #include <thread>
 #include <fstream>
-const int full_screen = 237;
 void WaveAlgorithm(std::vector<std::vector<char>> maze,
                     int size_of_maze,
                    int user) {
@@ -92,7 +91,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         SetColor(10);
         std::cout << std::string(full_screen, '=');
         std::cout << "\n\n\n\n";
-        std::this_thread::sleep_for(std::chrono::milliseconds(1400));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         for (int i = 0; i < size_of_maze; i++) {
           for (int j = 0; j < size_of_maze; j++) {
             if (wave[i][j] == 9999) {

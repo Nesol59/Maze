@@ -2,18 +2,24 @@
 #include <string>
 #include <iomanip>
 #include "input_output_HEAD.h"
-const int full_screen = 237;
+
 void FirstStep() {
   SetColor(10);
-  std::cout << std::string(full_screen, '=') << "\n\n"
-            << std::right << std::setw(140);
+  std::cout << std::string(full_screen, '=') << "\n\n\n" <<
+            std::string(100, ' ');
   ResetColor();
-  std::cout << "Добро пожаловать в меню выбора задач :) " << "\n\n\n";
+  std::cout << "Добро пожаловать в меню выбора задач :)" << "\n\n\n";
   SetColor(10);
   std::cout<< std::string(full_screen, '=');
   SetColor(9);
-  std::cout<< "\n\n    1. Cгенерировать лабиринт ( можно использовать как пример для файла ) \n\n"
-            << "    2. Загрузить лабиринт (двери должны быть символом < / > , тропа < . > , остальное будет считаться стенками)\n\n\n";
+  std::cout << "\n\n\n    1. Cгенерировать лабиринт ( можно использовать как "
+               "пример для файла ) \n\n"
+            << "    2. Загрузить лабиринт (двери должны быть символом < / > , "
+               "тропа < . > , остальное будет считаться стенками)\n\n"
+            << "    3. Офомление лезит за экран ((((\n\n"
+            << "    4. Вывести лабиринт на экран\n\n"
+
+            << "    5. Cледующий шаг\n\n\n";
   SetColor(10);
   std::cout << std::string(full_screen, '=');
   ResetColor();

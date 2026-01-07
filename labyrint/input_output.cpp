@@ -5,7 +5,8 @@
 #include <math.h>
 #include <iostream>
 #include <iomanip>
-const int full_screen = 237;
+#include "input_output_HEAD.h"
+
 // ставит цвет
 void SetColor(int colorCode) {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -82,10 +83,10 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   while (input_maze >> part_of_maze) {
     size_of_maze++;
   }
+  int count_doors = 0;
   input_maze.clear();
   input_maze.seekg(0, input_maze.beg);
   copy_size = size_of_maze;
-  std::cout << (sqrt(size_of_maze) == sqrt(copy_size)) << size_of_maze<< "\n\n";
   if (sqrt(size_of_maze) == sqrt(copy_size)) {
     
     int size = sqrt(size_of_maze);
@@ -96,14 +97,26 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
     }
     for (int i = 0 ; i < size;i++) {
       for (int j = 0; j < size; j++) {
+          
+        
+
+        
         input_maze >> part_of_maze;
         maze[i][j] = part_of_maze;
+        if (maze[i][j] == '/') {
+          count_doors++;
+        }
+        if (count_doors > 2 || count_doors < 0) {
+          size_of_maze = 0;
+          return;
+        }
       }
     }
   } else {
+
     size_of_maze = 0;
-    std::cout << "Лабиринт не подходит\n\n";
   }
+  if (count_doors==1) size_of_maze = 0;
   input_maze.close();
 }
 bool CheckIsNumber(int & number, int min_eval,int max_eval) {

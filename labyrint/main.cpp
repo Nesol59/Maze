@@ -8,72 +8,110 @@
 #include "text_for_user_HEAD.h"
 #include <iomanip>
 #include <fstream>
-const int full_screen = 237;
+
 int main() {
+
   SetConsoleCP(1251);
   SetConsoleOutputCP(1251);
   int size_of_maze=0;
-  FirstStep();
-  std::cout << "\n\n";
+  
   int user;
-  while (true) {
-    std::cout << "    Выберите опцию от 1 до 2: ";
-    if (!CheckIsNumber(user, 1, 2)) {
-      SetColor(4);
-      std::cout << "    Некорретный ввод!\n\n";
-      ResetColor();
-      continue;
-    } 
-    break;
-    std::cout << "\n\n";
-  }
-  system("cls");
   std::vector<std::vector<char>> maze;
-  switch (user) {
-    case 1: {
-      SetColor(10);
-      std::cout << std::string(full_screen, '=') << "\n\n"
-                << std::right << std::setw(130);
-      ResetColor();
-      std::cout << "Для генерации лабиринта  " << "\n\n\n";
-      SetColor(10);
-      std::cout << std::string(full_screen, '=');
-      SetColor(9);
+  bool flag = 1;
+  bool is_user_made_maze = 0;
+  while (flag) {
+    while (true) {
+      FirstStep();
       std::cout << "\n\n";
-      while (true) {
+      std::cout << "    Выберите опцию от 1 до 5: ";
+      if (!CheckIsNumber(user, 1, 5)) {
+        SetColor(4);
+        std::cout << "    Некорретный ввод!\n\n";
         ResetColor();
-        std::cout << "    Введите размер лабиринта (он должен быть нечетным от 5 до 25 ): ";
-        if (!CheckIsNumber(size_of_maze, 5, 25) || size_of_maze%2==0) {
-          SetColor(4);
-          std::cout << "    Некорретный ввод!\n\n";
+        continue;
+      }
+      break;
+      std::cout << "\n\n";
+    }
+    switch (user) {
+      case 1: {
+        SetColor(10);
+        std::cout << std::string(full_screen, '=') << "\n\n\n" <<
+            std::string(100, ' ');
+        ResetColor();
+        std::cout << "Для генерации лабиринта  " << "\n\n\n";
+        SetColor(10);
+        std::cout << std::string(full_screen, '=');
+        SetColor(9);
+        std::cout << "\n\n";
+        while (true) {
           ResetColor();
-          continue;
+          std::cout << "    Введите размер лабиринта (он должен быть нечетным "
+                       "от 5 до 25 ): ";
+          if (!CheckIsNumber(size_of_maze, 5, 25) || size_of_maze % 2 == 0) {
+            SetColor(4);
+            std::cout << "    Некорретный ввод!\n\n";
+            ResetColor();
+            continue;
+          }
+          break;
+          std::cout << "\n\n";
+        }
+        maze.resize(size_of_maze, std::vector<char>(size_of_maze));
+        GenerateMaze(maze, size_of_maze);
+        is_user_made_maze = 1;
+        break;
+      }
+      case 2: {
+        size_of_maze = 0;
+        maze.resize(0, std::vector<char>(0));
+        InputFile(maze, size_of_maze);
+        if (!size_of_maze) {
+          SetColor(4);
+          std::cout << "    Данный лабиринт не подходит под описание, возврат к "
+                       "выбору задачи\n\n";
+          ResetColor();
+          is_user_made_maze = 0;
+        } else {
+          std::cout << "    Лабиринт успешно загружен!\n\n";
+          is_user_made_maze = 1;
         }
         break;
-        std::cout << "\n\n";
       }
-      maze.resize(size_of_maze, std::vector<char>(size_of_maze));
-      GenerateMaze(maze, size_of_maze);
-      break;
-    }
-    case 2: {
-      InputFile(maze, size_of_maze);
-      if (!size_of_maze) {
+      case 3: {
+        std::cout << "    К сожалению, я могу только посоветовать отрегулировать "
+                     "значение <const int full_screen = 237> в файле "
+                     "<input_output_HEAD.h>\n\n";
+        break;
+      }
+      case 4: {
+        if (is_user_made_maze) {
+          ShowMaze(maze, size_of_maze);
+        } else {
+          std::cout << "    Мы не можем продолжить без дегенерации "
+                        "лабиринта..................\n\n";
+        }
+        break;
+      
+      }
+      case 5: {
+        if (is_user_made_maze)
+          flag = 0;
+        else
+          (std::cout << "    Мы не можем продолжить без дегенерации "
+                        "лабиринта..................\n\n");
+        break;
+      }
+
+      default: {
         SetColor(4);
-        std::cout << "  Завершение работы программы из-за некорректного "
-                     "лабиринта в файле//\n\n";
+        std::cout
+            << "  Такой опции не обнаружено, возврат к выбору задачи ///\n\n";
         ResetColor();
-        return -1;
       }
-      break;
-    }
-    default: {
-      SetColor(4);
-      std::cout << "  Такой опции не обнаружено, возврат к выбору задачи ///\n\n";
-      ResetColor();
     }
   }
-  bool flag = 1;
+  flag = 1;
   while (flag) {
     SecondStep();
     std::cout << "\n\n";
