@@ -22,6 +22,9 @@ void PrintColoredSymbol(char symbol) {
     case '.':
       SetColor(10);  // зеленый
       break;
+    default:
+      SetColor(1);  // синий
+      break;
   }
   std::cout << symbol;
   ResetColor();

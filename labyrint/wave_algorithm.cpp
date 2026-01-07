@@ -1,7 +1,10 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <iomanip>
-void WaveAlgorithm(std::vector<std::vector<char>> & maze, int size_of_maze) {
+#include "input_output_HEAD.h"
+void WaveAlgorithm(std::vector<std::vector<char>> maze,
+                    int size_of_maze,
+                   int user) {
   std::vector<std::vector<int>> wave(size_of_maze,
                                      std::vector<int>(size_of_maze));
   int start_y, start_x, end_x, end_y;
@@ -47,48 +50,75 @@ void WaveAlgorithm(std::vector<std::vector<char>> & maze, int size_of_maze) {
               wave[i - 1][j] == 2025 || wave[i + 1][j] == 2025) {
             flag = 0;
           }
-          if (wave[i][j + 1] != 9999 && wave[i][j + 1] != 0 && wave[i][j + 1]<0) {
+          if (wave[i][j + 1] != 9999 && wave[i][j + 1] != 0 &&
+              wave[i][j + 1] < 0) {
             wave[i][j + 1] = curret_step + 1;
-
           }
           if (wave[i][j - 1] != 9999 && wave[i][j - 1] != 0 &&
               wave[i][j - 1] < 0) {
             wave[i][j - 1] = curret_step + 1;
-
           }
           if (wave[i + 1][j] != 9999 && wave[i + 1][j] != 0 &&
-              wave[i+1][j] < 0) {
+              wave[i + 1][j] < 0) {
             wave[i + 1][j] = curret_step + 1;
-
           }
           if (wave[i - 1][j] != 9999 && wave[i - 1][j] != 0 &&
-              wave[i-1][j] < 0) {
+              wave[i - 1][j] < 0) {
             wave[i - 1][j] = curret_step + 1;
-
           }
         }
       }
     }
 
     curret_step++;
-    for (int i = 0; i < 1000000; i++) {
-    }
-    for (int i = 0; i < size_of_maze; i++) {
-      for (int j = 0; j < size_of_maze; j++) {
-        std::cout << std::right << std::setw(6) << (wave[i][j]);
-        std::cout << " ";
+    switch (user) {
+      case 1: {
+        for (int i = 0; i < size_of_maze; i++) {
+          for (int j = 0; j < size_of_maze; j++) {
+            if (wave[i][j] == 9999) {
+              SetColor(4);
+              std::cout << std::right << std::setw(6) << (wave[i][j]);
+              std::cout << " ";
+              ResetColor();
+            }
+            else if (wave[i][j] == -1) {
+              std::cout << std::right << std::setw(6) << (wave[i][j]);
+              std::cout << " ";
+            } 
+            else if (wave[i][j] == 2025) {
+              SetColor(11);
+              std::cout << std::right << std::setw(6) << (wave[i][j]);
+              std::cout << " ";
+              ResetColor();
+            } 
+            else if (wave[i][j] == 0) {
+              SetColor(5);
+              std::cout << std::right << std::setw(6) << (wave[i][j]);
+              std::cout << " ";
+              ResetColor();
+            } 
+            else {
+                SetColor(2);
+                std::cout << std::right << std::setw(6) << (wave[i][j]);
+                std::cout << " ";
+                ResetColor();
+            }
+          }
+          std::cout << "\n\n";
+        }
+        std::cout << "\n\n\n";
+        break;
       }
-      std::cout << "\n\n";
+      case 2: {
+        
+        break;
+      }
+      default: {
+        break;
+      }
     }
-    std::cout << "\n\n\n";
   }
-  for (int i = 0; i < size_of_maze; i++) {
-    for (int j = 0; j < size_of_maze; j++) {
-      std::cout << std::right << std::setw(6) << (wave[i][j]);
-      std::cout << " ";
-    }
-    std::cout << "\n";
-  }
+  //поиск кратчайшего пути
   std::vector<std::vector <int>> restore_path;
   int num1, num2, num3, num4,min_num;
   while (true) {
@@ -140,9 +170,13 @@ void WaveAlgorithm(std::vector<std::vector<char>> & maze, int size_of_maze) {
   for (int i = 0; i < restore_path.size(); i++) {
     int x = restore_path[i][1];
     int y = restore_path[i][0];
-    maze[y][x] = 'v';
+    maze[y][x] = '*';
+    maze[0][0] = '#';
   }
-  
+  if (user == 2) {
+    ShowMaze(maze, size_of_maze);
+  }
+
 
  
 }

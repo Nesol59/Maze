@@ -22,7 +22,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze) {
         int shall_we_stop;
         if (random_direction == 1) { //вверх
           for (int up = i; up > 0 && maze[up][j] != '#'; up--) {
-              shall_we_stop = rand() % 10;
+              shall_we_stop = rand() % 7;
               if (shall_we_stop)
                 maze[up][j] = '#';
               else
