@@ -6,7 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include "input_output_HEAD.h"
-
+#include <thread>
 // ставит цвет
 void SetColor(int colorCode) {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -42,7 +42,7 @@ void PrintColoredSymbol(char symbol) {
   std::cout << symbol;
   ResetColor();
 }
-
+//вывод цветного лабиритнка
 void ShowMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
   SetColor(10);
   std::cout << std::string(full_screen, '=') << "\n\n\n"
@@ -66,6 +66,7 @@ void ShowMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
   std::cout << "\n\n";
 
 }
+//либиринт из файла 
 void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   std::ifstream input_maze("input_maze.txt");
   if (!input_maze.is_open()) {
@@ -77,6 +78,7 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   size_of_maze = 0;
   char part_of_maze;
   float copy_size;
+  //из-за юникода 3 символа скип
   for (int i = 0; i < 3; i++) {
     input_maze >> part_of_maze;
   }
@@ -92,6 +94,7 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
     int size = sqrt(size_of_maze);
     size_of_maze = size; 
     maze.resize(size,std::vector<char>(size));
+    // из-за юникода 3 символа скип
     for (int i = 0; i < 3; i++) {
       input_maze >> part_of_maze;
     }
@@ -119,6 +122,7 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   if (count_doors==1) size_of_maze = 0;
   input_maze.close();
 }
+//проверка на ввод цифры, а так же граничные значения
 bool CheckIsNumber(int & number, int min_eval,int max_eval) {
   std::string s;
   std::getline(std::cin, s);
@@ -135,8 +139,8 @@ bool CheckIsNumber(int & number, int min_eval,int max_eval) {
   }
   return 0;
 }
-
-void OutputWave(std::vector<std::vector<int>> wave, int size_of_maze,
+//вывод волны в файл
+void OutputWaveFile(std::vector<std::vector<int>> wave, int size_of_maze,
                 int curret_step) {
   std::ofstream output_file;
   output_file.open("output_wave.txt", std::ofstream::out | std::ofstream::app);
@@ -149,21 +153,30 @@ void OutputWave(std::vector<std::vector<int>> wave, int size_of_maze,
   output_file << std::string(full_screen, '=');
 
   output_file << "\n\n  ";
-  output_file << "Волна номер: " << curret_step << "\n\n";
+  output_file << "    Волна номер: " << curret_step << "\n\n";
 
   output_file << std::string(full_screen, '=');
   output_file << "\n\n\n\n";
   for (int i = 0; i < size_of_maze; i++) {
     for (int j = 0; j < size_of_maze; j++) {
-        output_file << std::right << std::setw(6) << (wave[i][j]);
-        output_file << " ";
+        //перевожу из списка волны в более - менее читаемый вариант
+      if (wave[i][j] == 9999) {
+        output_file << std::right << std::setw(6) << '#';
+      
+      }
+      else if (wave[i][j] == -1) {
+        output_file << std::right << std::setw(6) << '.';
+
+      } else
+        output_file << std::right << std::setw(6) << wave[i][j];
+      output_file << " ";
     }
     output_file << "\n\n";
   }
   output_file << "\n\n\n";
   output_file.close();
 }
-
+//вывод кратчайшего пути в файл
 void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
   std::ofstream output_file("shortest_way.txt");
   if (!output_file.is_open()) {
@@ -180,6 +193,7 @@ void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
   } 
   output_file.close();
 }
+//вывод лаб. в файл
 void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
   std::ofstream output_file("output_maze.txt");
   if (!output_file.is_open()) {
@@ -195,4 +209,49 @@ void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
     output_file << "\n";
   }
   output_file.close();
+}
+//вывод поэтапно волны в консоль
+void OutputWaveConsole(std::vector<std::vector<int>> wave, int size_of_maze,int curret_step) {
+  SetColor(10);
+  std::cout << std::string(full_screen, '=');
+  SetColor(9);
+  std::cout << "\n\n  ";
+  std::cout << "  Волна номер: " << curret_step << "\n\n";
+  SetColor(10);
+  std::cout << std::string(full_screen, '=');
+  std::cout << "\n\n\n\n";
+  std::this_thread::sleep_for(std::chrono::milliseconds(650));
+  for (int i = 0; i < size_of_maze; i++) {
+    for (int j = 0; j < size_of_maze; j++) {
+      if (wave[i][j] == 9999) {
+        SetColor(7);
+        std::cout << std::right << std::setw(6) << '#';
+        std::cout << " ";
+        ResetColor();
+      } else if (wave[i][j] == -1) {
+        SetColor(11);
+        SetColor(10);
+        std::cout << std::right << std::setw(6) << '.';
+        std::cout << " ";
+        ResetColor();
+      } else if (wave[i][j] == 2026) {
+        SetColor(11);
+        std::cout << std::right << std::setw(6) << 2026;
+        std::cout << " ";
+        ResetColor();
+      } else if (wave[i][j] == 0) {
+        SetColor(5);
+        std::cout << std::right << std::setw(6) << 0;
+        std::cout << " ";
+        ResetColor();
+      } else {
+        SetColor(1);
+        std::cout << std::right << std::setw(6) << (wave[i][j]);
+        std::cout << " ";
+        ResetColor();
+      }
+    }
+    std::cout << "\n\n";
+  }
+  std::cout << "\n\n\n";
 }

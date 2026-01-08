@@ -18,7 +18,9 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
 
     }
   }
+  // если надо вывод поэтапно генерации лабиринта
   std::vector<std::vector<char>> copy_maze = maze;
+
   if (see_generate == 1) {
     
     std::this_thread::sleep_for(std::chrono::milliseconds(550));
@@ -79,6 +81,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
               break;
           }
         }
+        // если надо вывод поэтапно генерации лабиринта
         if (see_generate == 1) {
           if (copy_maze != maze) {
             copy_maze = maze;
@@ -111,14 +114,15 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
     exit = rand() % (size_of_maze );
   }
   if (which_side_enter) {
-    which_size_exit = 2;
+    which_size_exit = 2; // 2 справа
   } else
     which_size_exit = 3;
   if (which_size_exit == 2) {
     maze[exit][size_of_maze-2] = '/';
   } else {
-    maze[1][exit] = '/';
+    maze[1][exit] = '/'; //  слева
   }
+  // если надо вывод поэтапно генерации лабиринта
   if (see_generate == 1) {
     if (copy_maze != maze) {
       copy_maze = maze;

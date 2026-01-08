@@ -67,7 +67,7 @@ int main() {
                   << std::string(100, ' ');
         ResetColor();
 
-        std::cout << "Хотите увидеть пожаговаю генерацию лабиринта?" << "\n\n\n";
+        std::cout << "Хотите увидеть пошаговую генерацию лабиринта?" << "\n\n\n";
         SetColor(10);
         std::cout << std::string(full_screen, '=');
         SetColor(9);
@@ -107,8 +107,9 @@ int main() {
             break;
           }
 
-
+                
         }
+        std::cout << "    Лабиринт успешно сгенериован!\n\n";
         break;
       }
       case 2: {
@@ -128,19 +129,6 @@ int main() {
         break;
       }
       case 3: {
-        std::cout
-            << "    К сожалению, я могу только посоветовать отрегулировать "
-               "значение";
-        SetColor(10);
-        std::cout << " <const int full_screen = 237 > ";
-        ResetColor();
-        std::cout << "в файле ";
-        SetColor(10);
-        std::cout<< "<input_output_HEAD.h>\n\n";
-        ResetColor();
-        break;
-      }
-      case 4: {
         if (is_user_made_maze) {
           ShowMaze(maze, size_of_maze);
         } else {
@@ -150,19 +138,33 @@ int main() {
         break;
       
       }
-      case 5: {
+      case 4: {
         if (is_user_made_maze) {
+          std::cout << "    Лабиринт успешно загружен!\n\n";
           OutputMaze(maze, size_of_maze);
         } else
         std::cout << "    Мы не можем продолжить без дегенерации "
                      "лабиринта..................\n\n";
       } break;
-      case 6: {
+      case 5: {
         if (is_user_made_maze)
           flag = 0;
         else
           (std::cout << "    Мы не можем продолжить без дегенерации "
                         "лабиринта..................\n\n");
+        break;
+      }
+      case 6: {
+        std::cout
+            << "    К сожалению, я могу только посоветовать отрегулировать "
+               "значение";
+        SetColor(10);
+        std::cout << " <const int full_screen = 237 > ";
+        ResetColor();
+        std::cout << "в файле ";
+        SetColor(10);
+        std::cout << "<input_output_HEAD.h>\n\n";
+        ResetColor();
         break;
       }
 
@@ -182,6 +184,7 @@ int main() {
     while (true) {
       std::cout << "    Выберите опцию от 1 до 5: ";
       if (!CheckIsNumber(user, 1, 5)) {
+        std::cout << "\n";
         SetColor(4);
         std::cout << "    Некорретный ввод!\n\n";
         ResetColor();
@@ -203,20 +206,19 @@ int main() {
       case 3: {
         int clean;
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n"
+        std::cout << std::string(full_screen, '=') << "\n\n\n"
                   << std::string(100, ' ');
         ResetColor();
 
         std::cout << "  Очистить файл?" << "\n\n\n";
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n"
-                  << std::string(100, ' ');
+        std::cout << std::string(full_screen, '=') << "\n\n\n";
         ResetColor();
 
        
 
         while (true) {
-          std::cout << "\n\n    1.Да\n\n    2.Нет\n\n";
+          std::cout << "    1.Да\n\n    2.Нет\n\n";
           SetColor(10);
           std::cout << std::string(full_screen, '=') << "\n\n\n";
           ResetColor();
@@ -242,10 +244,12 @@ int main() {
           std::fstream("output_wave.txt", std::fstream::out);
         }
         WaveAlgorithm(maze, maze.size(), 3);
+ 
         break;
       }
       case 4: {
         WaveAlgorithm(maze, maze.size(), 4);
+        
         break;
       }
       case 5: {
