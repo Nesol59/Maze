@@ -40,12 +40,12 @@ int main() {
         size_of_maze = 0;
         maze.resize(0, std::vector<char>(0));
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n" <<
+        std::cout << kLineOfEval << "\n\n\n" <<
             std::string(100, ' ');
         ResetColor();
         std::cout << "Для генерации лабиринта  " << "\n\n\n";
         SetColor(10);
-        std::cout << std::string(full_screen, '=');
+        std::cout << kLineOfEval;
         SetColor(9);
         std::cout << "\n\n";
         while (true) {
@@ -63,19 +63,19 @@ int main() {
         }
         int see_generate;
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n"
+        std::cout << kLineOfEval << "\n\n\n"
                   << std::string(100, ' ');
         ResetColor();
 
         std::cout << "Хотите увидеть пошаговую генерацию лабиринта?" << "\n\n\n";
         SetColor(10);
-        std::cout << std::string(full_screen, '=');
+        std::cout << kLineOfEval;
         SetColor(9);
 
         while (true) {
           std::cout << "\n\n    1.Да\n\n    2.Нет\n\n";
           SetColor(10);
-          std::cout << std::string(full_screen, '=') << "\n\n\n";
+          std::cout << kLineOfEval << "\n\n\n";
           ResetColor();
           std::cout << "    Выберите опцию от 1 до 2: ";
           
@@ -84,7 +84,7 @@ int main() {
             SetColor(4);
             std::cout << "    Некорретный ввод!\n\n";
             SetColor(10);
-            std::cout << std::string(full_screen, '=') << "\n";
+            std::cout << kLineOfEval << "\n";
             ResetColor();
             continue;
           }
@@ -113,16 +113,22 @@ int main() {
         break;
       }
       case 2: {
-        size_of_maze = 0;
-        maze.resize(0, std::vector<char>(0));
-        InputFile(maze, size_of_maze);
-        if (!size_of_maze) {
+        std::vector<std::vector<char>> copy_maze;
+        copy_maze.resize(0, std::vector<char>(0));
+        int copy_size_of_maze = 0;
+        InputFile(copy_maze, copy_size_of_maze);
+        if (!copy_size_of_maze) {
+          if (!is_user_made_maze) {
+            size_of_maze = 0;
+            maze.resize(0, std::vector<char>(0));
+          }
           SetColor(4);
           std::cout << "    Данный лабиринт не подходит под описание, возврат к "
                        "выбору задачи\n\n";
           ResetColor();
-          is_user_made_maze = 0;
         } else {
+          size_of_maze = copy_size_of_maze;
+          maze = copy_maze;
           std::cout << "    Лабиринт успешно загружен!\n\n";
           is_user_made_maze = 1;
         }
@@ -132,41 +138,69 @@ int main() {
         if (is_user_made_maze) {
           ShowMaze(maze, size_of_maze);
         } else {
-          std::cout << "    Мы не можем продолжить без дегенерации "
+          std::cout << "    Мы не можем продолжить без генерации "
                         "лабиринта..................\n\n";
         }
         break;
+        
       
       }
       case 4: {
         if (is_user_made_maze) {
+          
+          int clean;
+          SetColor(10);
+          std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
+          ResetColor();
+
+          std::cout << "  Очистить файл?" << "\n\n\n";
+          SetColor(10);
+          std::cout << kLineOfEval << "\n\n\n";
+          ResetColor();
+
+          while (true) {
+            std::cout << "    1.Да\n\n    2.Нет\n\n";
+            SetColor(10);
+            std::cout << kLineOfEval << "\n\n\n";
+            ResetColor();
+            std::cout << "    Выберите опцию от 1 до 2: ";
+
+            if (!CheckIsNumber(clean, 1, 2)) {
+              SetColor(4);
+              std::cout << "    Некорретный ввод!\n\n";
+              SetColor(10);
+              std::cout << kLineOfEval << "\n";
+              ResetColor();
+              continue;
+            }
+            break;
+            std::cout << "\n\n";
+          }
+          SetColor(10);
+          std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
+          ResetColor();
+          std::cout << "\n\n";
+          if (clean == 1) {
+            std::fstream("output_maze.txt", std::fstream::out);
+          }
+          
           std::cout << "    Лабиринт успешно загружен!\n\n";
           OutputMaze(maze, size_of_maze);
         } else
-        std::cout << "    Мы не можем продолжить без дегенерации "
-                     "лабиринта..................\n\n";
-      } break;
+          std::cout << "    Мы не можем продолжить без генерации "
+                       "лабиринта..................\n\n";
+        break;
+        
+      } 
       case 5: {
         if (is_user_made_maze)
           flag = 0;
         else
-          (std::cout << "    Мы не можем продолжить без дегенерации "
+          (std::cout << "    Мы не можем продолжить без генерации "
                         "лабиринта..................\n\n");
         break;
       }
-      case 6: {
-        std::cout
-            << "    К сожалению, я могу только посоветовать отрегулировать "
-               "значение";
-        SetColor(10);
-        std::cout << " <const int full_screen = 237 > ";
-        ResetColor();
-        std::cout << "в файле ";
-        SetColor(10);
-        std::cout << "<input_output_HEAD.h>\n\n";
-        ResetColor();
-        break;
-      }
+
 
       default: {
         SetColor(4);
@@ -206,13 +240,13 @@ int main() {
       case 3: {
         int clean;
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n"
+        std::cout << kLineOfEval << "\n\n\n"
                   << std::string(100, ' ');
         ResetColor();
 
         std::cout << "  Очистить файл?" << "\n\n\n";
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n";
+        std::cout << kLineOfEval << "\n\n\n";
         ResetColor();
 
        
@@ -220,7 +254,7 @@ int main() {
         while (true) {
           std::cout << "    1.Да\n\n    2.Нет\n\n";
           SetColor(10);
-          std::cout << std::string(full_screen, '=') << "\n\n\n";
+          std::cout << kLineOfEval << "\n\n\n";
           ResetColor();
           std::cout << "    Выберите опцию от 1 до 2: ";
 
@@ -228,7 +262,7 @@ int main() {
             SetColor(4);
             std::cout << "    Некорретный ввод!\n\n";
             SetColor(10);
-            std::cout << std::string(full_screen, '=') << "\n";
+            std::cout << kLineOfEval << "\n";
             ResetColor();
             continue;
           }
@@ -236,7 +270,7 @@ int main() {
           std::cout << "\n\n";
         }
         SetColor(10);
-        std::cout << std::string(full_screen, '=') << "\n\n\n"
+        std::cout << kLineOfEval << "\n\n\n"
                   << std::string(100, ' ');
         ResetColor();
         std::cout<< "\n\n";
@@ -248,6 +282,41 @@ int main() {
         break;
       }
       case 4: {
+        int clean;
+        SetColor(10);
+        std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
+        ResetColor();
+
+        std::cout << "  Очистить файл?" << "\n\n\n";
+        SetColor(10);
+        std::cout << kLineOfEval << "\n\n\n";
+        ResetColor();
+
+        while (true) {
+          std::cout << "    1.Да\n\n    2.Нет\n\n";
+          SetColor(10);
+          std::cout << kLineOfEval << "\n\n\n";
+          ResetColor();
+          std::cout << "    Выберите опцию от 1 до 2: ";
+
+          if (!CheckIsNumber(clean, 1, 2)) {
+            SetColor(4);
+            std::cout << "    Некорретный ввод!\n\n";
+            SetColor(10);
+            std::cout << kLineOfEval << "\n";
+            ResetColor();
+            continue;
+          }
+          break;
+          std::cout << "\n\n";
+        }
+        SetColor(10);
+        std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
+        ResetColor();
+        std::cout << "\n\n";
+        if (clean == 1) {
+          std::fstream("shortest_way.txt", std::fstream::out);
+        }
         WaveAlgorithm(maze, maze.size(), 4);
         
         break;

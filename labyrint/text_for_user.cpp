@@ -5,12 +5,12 @@
 
 void FirstStep() {
   SetColor(10);
-  std::cout << std::string(full_screen, '=') << "\n\n\n" <<
+  std::cout << kLineOfEval << "\n\n\n" <<
             std::string(100, ' ');
   ResetColor();
   std::cout << "Добро пожаловать в меню выбора задач :)" << "\n\n\n";
   SetColor(10);
-  std::cout<< std::string(full_screen, '=');
+  std::cout << kLineOfEval;
   SetColor(9);
   std::cout << "\n\n\n    1. Cгенерировать лабиринт ( можно использовать как "
                "пример для файла ) \n\n"
@@ -19,19 +19,19 @@ void FirstStep() {
             << "    3. Вывести лабиринт на экран\n\n"
             << "    4. Загрузить этот лабиринт в файл\n\n"
 
-            << "    5. Cледующий шаг\n\n"
-            << "    6. Офомление лезет за экран ((((\n\n\n";
+            << "    5. Cледующий шаг\n\n\n";
+
   SetColor(10);
-  std::cout << std::string(full_screen, '=');
+  std::cout << kLineOfEval;
   ResetColor();
 }
 void SecondStep() {
   SetColor(10);
-  std::cout << std::string(full_screen, '=') << "\n\n\n" << std::string(100, ' ');
+  std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
   ResetColor();
   std::cout << "Добро пожаловать в меню выбора задач :)" << "\n\n\n";
   SetColor(10);
-  std::cout << std::string(full_screen, '=');
+  std::cout << kLineOfEval;
   SetColor(9);
   std::cout << "\n\n\n    1. Вывести пошагово работу волнового алгоритма до нахождения выхода или его отсутствия на экран (2026 - это выход, 0 - это вход)\n\n"
             << "    2. Вывести кратчайший путь , если он есть, на экран (кратчайший путь обозначен "
@@ -43,6 +43,6 @@ void SecondStep() {
             << " <   > " << ")\n\n"
             << "    5. Закончить работу программы\n\n\n";
   SetColor(10);
-  std::cout << std::string(full_screen, '=');
+  std::cout << kLineOfEval;
   ResetColor();
 }

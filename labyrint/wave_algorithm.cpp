@@ -10,26 +10,26 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
                    int user) {
   std::vector<std::vector<int>> wave(size_of_maze,
                                      std::vector<int>(size_of_maze));
-  int start_y, start_x, end_x, end_y;
+  int start_y=0, start_x=0, end_x=0, end_y=0;
   
   //нахожу начало и конец
   for (int i = 1; i < size_of_maze-1; i++) {
-    if (maze[i][size_of_maze - 2] == '/'){
-      end_y = i;
-      end_x = size_of_maze - 2;
+    for (int j = 1; j < size_of_maze - 1; j++) {
+        if (maze[i][j] == '/') {
+            if (!start_x) {
+              start_y = i;
+              start_x = j;
+            } else {
+              end_y = i;
+              end_x = j;
+            
+            }
+            
+        }
+      
+    
     }
-    if (maze[1][i] == '/') {
-      end_y = 1;
-      end_x = i;
-    }
-    if (maze[size_of_maze - 2][i] == '/') {
-      start_x = i;
-      start_y = size_of_maze - 2;
-    }
-    if (maze[i][1] == '/') {
-      start_y =i;
-      start_x = 1;
-    }
+    
       
   }
   //создаю массив для волны
@@ -51,7 +51,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
   bool flag = 1;
   // старая волна, мало ли выхода нет
   std::vector<std::vector<int>> old_wave = wave;
-  //сам алгоритм волны, идущий пока волна не достигнет выхода (можно сделать,чтоб шла , пока еще есть - 1 в списке волны)
+  //сам алгоритм волны, идущий пока волна не достигнет выхода (можно сделать,чтоб шла , пока еще есть еще есть неопсещенный волной клетки)
   while (flag) {
     for (int i = 1; i < size_of_maze - 1; i++) {
       for (int j = 1; j < size_of_maze - 1; j++) {
@@ -127,10 +127,10 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
       num4 = wave[end_y - 1][end_x];
 
     min_num = 10000000;
-    min_num = std::min(min_num, num1);
-    min_num = std::min(min_num, num2);
-    min_num = std::min(min_num, num3);
-    min_num = std::min(min_num, num4);
+    min_num = min(min_num, num1);
+    min_num = min(min_num, num2);
+    min_num = min(min_num, num3);
+    min_num = min(min_num, num4);
     restore_path.push_back(std::vector<int>(2));
     if (min_num == 0) break;
     if (min_num == num1) {
@@ -159,32 +159,34 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
     }
   }
   //в консоль
-  if (user == 2) {
-    for (int i = 0; i < restore_path.size(); i++) {
-      int x = restore_path[i][1];
-      int y = restore_path[i][0];
-      maze[y][x] = '*';
-      maze[0][0] = '#';
+  switch (user) {
+    case 2: {
+      for (int i = 0; i < restore_path.size(); i++) {
+        int x = restore_path[i][1];
+        int y = restore_path[i][0];
+        maze[y][x] = '*';
+        maze[0][0] = '#';
+      }
+      ShowMaze(maze, size_of_maze);
+      break;
     }
-    ShowMaze(maze, size_of_maze);
- 
-  }
-  if (user == 3) {
-    std::cout << "    Волна успешно загружена!\n\n";
-
-  }
-  //просто символ звездочки в файле плохо видно без голубого цвета
-  if (user == 4) {
-    for (int i = 0; i < restore_path.size(); i++) {
-      int x = restore_path[i][1];
-      int y = restore_path[i][0];
-      maze[y][x] = ' ';
-      maze[0][0] = '#';
+    case 3: {
+      std::cout << "    Волна успешно загружена!\n\n";
+      break;
     }
-    std::cout << "    Кратчайший путь успешно загружен!\n\n";
-    OutputShortestWay(maze, size_of_maze);
+    // просто символ звездочки в файле плохо видно без голубого цвета
+    case 4: {
+      for (int i = 0; i < restore_path.size(); i++) {
+        int x = restore_path[i][1];
+        int y = restore_path[i][0];
+        maze[y][x] = ' ';
+        maze[0][0] = '#';
+      }
+      std::cout << "    Кратчайший путь успешно загружен!\n\n";
+      OutputShortestWay(maze, size_of_maze);
+      break;
+    }
   }
-
 
 
 }
