@@ -4,35 +4,35 @@
 #include "input_output_HEAD.h"
 
 void FirstStep() {
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval << "\n\n\n" <<
             std::string(100, ' ');
-  ResetColor();
+  resetColor();
   std::cout << "Добро пожаловать в меню выбора задач :)" << "\n\n\n";
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
-  SetColor(9);
+  setColor(9);
   std::cout << "\n\n\n    1. Cгенерировать лабиринт ( можно использовать как "
                "пример для файла ) \n\n"
-            << "    2. Загрузить лабиринт (двери должны быть символом < / > , "
-               "тропа < . > , остальное будет считаться стенками)\n\n"
+            << "    2. Загрузить лабиринт (вход и выход должны быть символом < / > , "
+               "тропа < . > , остальное будет считаться стенками , а размерность лабиринта N*N )\n\n"
             << "    3. Вывести лабиринт на экран\n\n"
             << "    4. Загрузить этот лабиринт в файл\n\n"
 
             << "    5. Cледующий шаг\n\n\n";
 
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
-  ResetColor();
+  resetColor();
 }
 void SecondStep() {
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval << "\n\n\n" << std::string(100, ' ');
-  ResetColor();
+  resetColor();
   std::cout << "Добро пожаловать в меню выбора задач :)" << "\n\n\n";
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
-  SetColor(9);
+  setColor(9);
   std::cout << "\n\n\n    1. Вывести пошагово работу волнового алгоритма до нахождения выхода или его отсутствия на экран (2026 - это выход, 0 - это вход)\n\n"
             << "    2. Вывести кратчайший путь , если он есть, на экран (кратчайший путь обозначен "
                "символом"
@@ -42,7 +42,7 @@ void SecondStep() {
                "символом"
             << " <   > " << ")\n\n"
             << "    5. Закончить работу программы\n\n\n";
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
-  ResetColor();
+  resetColor();
 }

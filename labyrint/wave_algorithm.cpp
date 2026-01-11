@@ -85,20 +85,20 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
       if (user == 3)
         std::cout << "    Волновой алгоритм загружен до обнаружения отсутствия "
                      "выхода\n\n";
-      SetColor(4);
+      setColor(4);
       std::cout << "    Из лабиринта нет выхода!\n\n";
-      ResetColor();
+      resetColor();
       flag = 0;
       return;
     } else old_wave = wave;
     //если надо вывод wave поэтапно
     switch (user) {
       case 1: {
-        OutputWaveConsole(wave, size_of_maze, curret_step);
+        outputWaveConsole(wave, size_of_maze, curret_step);
         
       }
       case 3: {
-        OutputWaveFile(wave, size_of_maze, curret_step);
+        outputWaveFile(wave, size_of_maze, curret_step);
 
         break;
       }
@@ -167,7 +167,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         maze[y][x] = '*';
         maze[0][0] = '#';
       }
-      ShowMaze(maze, size_of_maze);
+      showMaze(maze, size_of_maze);
       break;
     }
     case 3: {
@@ -183,7 +183,7 @@ void WaveAlgorithm(std::vector<std::vector<char>> maze,
         maze[0][0] = '#';
       }
       std::cout << "    Кратчайший путь успешно загружен!\n\n";
-      OutputShortestWay(maze, size_of_maze);
+      outputShortestWay(maze, size_of_maze);
       break;
     }
   }

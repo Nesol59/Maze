@@ -8,51 +8,51 @@
 #include "input_output_HEAD.h"
 #include <thread>
 // ставит цвет
-void SetColor(int colorCode) {
+void setColor(int colorCode) {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
   SetConsoleTextAttribute(hConsole, colorCode);
 }
 // функция для сброса цвета текста
-void ResetColor() {
+void resetColor() {
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
   SetConsoleTextAttribute(
       hConsole, 7);  // делает белый цвет по дефолту, что другое не было цветным
 }
 
 // функция для вывода цветных символов
-void PrintColoredSymbol(char symbol) {
+void printColoredSymbol(char symbol) {
   switch (symbol) {
     case '#':
-      SetColor(7);  // белый
+      setColor(7);  // белый
       break;
     case '.':
-      SetColor(10);  // зеленый
+      setColor(10);  // зеленый
       break;
     case '/':
-      SetColor(1);  // синий
+      setColor(1);  // синий
       break;
     case '*':
-      SetColor(1);  // синий
+      setColor(1);  // синий
       break;
     default:
-      SetColor(7);  // белый
+      setColor(7);  // белый
       break;
 
   }
   std::cout << symbol;
-  ResetColor();
+  resetColor();
 }
 //вывод цветного лабиритнка
-void ShowMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
-  SetColor(10);
+void showMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
+  setColor(10);
   std::cout << kLineOfEval << "\n\n\n"
             << std::string(100, ' ');
-  ResetColor();
+  resetColor();
 
   std::cout << "Ваш лабиринт" << "\n\n\n";
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
-  ResetColor();
+  resetColor();
   std::cout << "\n\n\n";
   char part_of_maze;
   for (int i = 0; i < size_of_maze; i++) {
@@ -61,21 +61,21 @@ void ShowMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
       part_of_maze = maze[i][j];
       switch (part_of_maze) {
         case '/': {
-          SetColor(1);
+          setColor(1);
           std::cout << std::right << std::setw(6) << (maze[i][j]);
-          ResetColor();
+          resetColor();
           break;
         }
         case '*': {
-          SetColor(1);
+          setColor(1);
           std::cout << std::right << std::setw(6) << (maze[i][j]);
-          ResetColor();
+          resetColor();
           break;
         }
         case '.': {
-          SetColor(10);
+          setColor(10);
           std::cout << std::right << std::setw(6) << '.';
-          ResetColor();
+          resetColor();
           break;
         } 
         default: {
@@ -91,12 +91,12 @@ void ShowMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
 
 }
 //либиринт из файла 
-void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
+void inputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   std::ifstream input_maze("input_maze.txt");
   if (!input_maze.is_open()) {
-    SetColor(4);
+    setColor(4);
     std::cout << "Ошибка открытия файла для записи////" << "\n\n";
-    ResetColor();
+    resetColor();
     return;
   }
   size_of_maze = 0;
@@ -151,7 +151,7 @@ void InputFile(std::vector<std::vector<char>> & maze, int & size_of_maze) {
   input_maze.close();
 }
 //проверка на ввод цифры, а так же граничные значения
-bool CheckIsNumber(int & number, int min_eval,int max_eval) {
+bool checkIsNumber(int & number, int min_eval,int max_eval) {
   std::string s;
   std::getline(std::cin, s);
   std::cout << "\n";
@@ -168,14 +168,14 @@ bool CheckIsNumber(int & number, int min_eval,int max_eval) {
   return 0;
 }
 //вывод волны в файл
-void OutputWaveFile(std::vector<std::vector<int>> wave, int size_of_maze,
+void outputWaveFile(std::vector<std::vector<int>> wave, int size_of_maze,
                 int curret_step) {
   std::ofstream output_file;
   output_file.open("output_wave.txt", std::ofstream::out | std::ofstream::app);
   if (!output_file.is_open()) {
-    SetColor(4);
+    setColor(4);
     std::cout << "Ошибка открытия файла для записи////" << "\n\n";
-    ResetColor();
+    resetColor();
     return;
   }
   output_file << kLineOfEval;
@@ -205,14 +205,14 @@ void OutputWaveFile(std::vector<std::vector<int>> wave, int size_of_maze,
   output_file.close();
 }
 //вывод кратчайшего пути в файл
-void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
+void outputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
   std::ofstream output_file;
   output_file.open("shortest_way.txt" , std::ofstream::out | std::ofstream::app);
   
   if (!output_file.is_open()) {
-    SetColor(4);
+    setColor(4);
     std::cout << "Ошибка открытия файла для записи////" << "\n\n";
-    ResetColor();
+    resetColor();
     return;
   }
   char part_of_maze;
@@ -225,15 +225,15 @@ void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
           break;
         }
         case '.': {
-          SetColor(10);
+          setColor(10);
           output_file << std::right << std::setw(6) << '.';
-          ResetColor();
+          resetColor();
           break;
         }
         default: {
-          SetColor(1);
+          setColor(1);
           output_file << std::right << std::setw(6) << (maze[i][j]);
-          ResetColor();
+          resetColor();
         }
       }
       output_file << " ";
@@ -243,14 +243,14 @@ void OutputShortestWay(std::vector<std::vector<char>> maze, int size_of_maze) {
   output_file.close();
 }
 //вывод лаб. в файл
-void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
+void outputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
   std::ofstream output_file;
   output_file.open(("output_maze.txt") , std::ofstream::out | std::ofstream::app);
   
   if (!output_file.is_open()) {
-    SetColor(4);
+    setColor(4);
     std::cout << "Ошибка открытия файла для записи////" << "\n\n";
-    ResetColor();
+    resetColor();
     return;
   }
   for (int i = 0; i < size_of_maze; i++) {
@@ -260,22 +260,22 @@ void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
       } else if (maze[i][j] == -1) {
         output_file << std::right << std::setw(6) << '.';
 
-        ResetColor();
+        resetColor();
       } else if (maze[i][j] == 2026) {
-        SetColor(11);
+        setColor(11);
         output_file << std::right << std::setw(6) << 2026;
 
-        ResetColor();
+        resetColor();
       } else if (maze[i][j] == 0) {
-        SetColor(5);
+        setColor(5);
         output_file << std::right << std::setw(6) << 0;
 
-        ResetColor();
+        resetColor();
       } else {
-        SetColor(1);
+        setColor(1);
         output_file << std::right << std::setw(6) << (maze[i][j]);
 
-        ResetColor();
+        resetColor();
       }
       std::cout << " ";
     }
@@ -284,44 +284,44 @@ void OutputMaze(std::vector<std::vector<char>> maze, int size_of_maze) {
   output_file.close();
 }
 //вывод поэтапно волны в консоль
-void OutputWaveConsole(std::vector<std::vector<int>> wave, int size_of_maze,int curret_step) {
-  SetColor(10);
+void outputWaveConsole(std::vector<std::vector<int>> wave, int size_of_maze,int curret_step) {
+  setColor(10);
   std::cout << kLineOfEval;
-  SetColor(9);
+  setColor(9);
   std::cout << "\n\n  ";
   std::cout << "  Волна номер: " << curret_step << "\n\n";
-  SetColor(10);
+  setColor(10);
   std::cout << kLineOfEval;
   std::cout << "\n\n\n\n";
   std::this_thread::sleep_for(std::chrono::milliseconds(650));
   for (int i = 0; i < size_of_maze; i++) {
     for (int j = 0; j < size_of_maze; j++) {
       if (wave[i][j] == 9999) {
-        SetColor(7);
+        setColor(7);
         std::cout << std::right << std::setw(6) << "####";
         std::cout << " ";
-        ResetColor();
+        resetColor();
       } else if (wave[i][j] == -1) {
-        SetColor(11);
-        SetColor(10);
+        setColor(11);
+        setColor(10);
         std::cout << std::right << std::setw(6) << '.';
         std::cout << " ";
-        ResetColor();
+        resetColor();
       } else if (wave[i][j] == 2026) {
-        SetColor(11);
+        setColor(11);
         std::cout << std::right << std::setw(6) << 2026;
         std::cout << " ";
-        ResetColor();
+        resetColor();
       } else if (wave[i][j] == 0) {
-        SetColor(5);
+        setColor(5);
         std::cout << std::right << std::setw(6) << 0;
         std::cout << " ";
-        ResetColor();
+        resetColor();
       } else {
-        SetColor(1);
+        setColor(1);
         std::cout << std::right << std::setw(6) << (wave[i][j]);
         std::cout << " ";
-        ResetColor();
+        resetColor();
       }
     }
     std::cout << "\n\n";

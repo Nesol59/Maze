@@ -3,7 +3,7 @@
 #include <time.h>
 #include "input_output_HEAD.h"
 #include <thread>
-void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
+void generateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
                   int see_generate) {
   srand(time(NULL));
   // генерация внешних стенок
@@ -24,7 +24,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
   if (see_generate == 1) {
     
     std::this_thread::sleep_for(std::chrono::milliseconds(550));
-    ShowMaze(maze, size_of_maze);
+    showMaze(maze, size_of_maze);
   }
   // генерация стенок в самом лабиринте
   for (int i = 1; i < size_of_maze-1; i++) {
@@ -92,7 +92,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
           if (copy_maze != maze) {
             copy_maze = maze;
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            ShowMaze(maze, size_of_maze);
+            showMaze(maze, size_of_maze);
           }
         }
       }
@@ -133,7 +133,7 @@ void GenerateMaze(std::vector<std::vector<char>>& maze, int size_of_maze,
     if (copy_maze != maze) {
       copy_maze = maze;
       std::this_thread::sleep_for(std::chrono::milliseconds(550));
-      ShowMaze(maze, size_of_maze);
+      showMaze(maze, size_of_maze);
     }
   }
   return;
